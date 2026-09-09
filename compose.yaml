@@ -1,0 +1,30 @@
+services:
+  db:
+    image: mysql:5.7
+    container_name: primefaces-mysql
+
+    environment:
+      MYSQL_ROOT_PASSWORD: eduardo73
+      MYSQL_ROOT_HOST: "%"
+
+    ports:
+      - "127.0.0.1:3306:3306"
+
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+    healthcheck:
+      test:
+        - CMD
+        - mysqladmin
+        - ping
+        - -h
+        - localhost
+        - -uroot
+        - -peduardo73
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+volumes:
+  mysql_data:
