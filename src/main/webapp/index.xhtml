@@ -1,56 +1,30 @@
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
-
-<h:head>
-
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="jakarta.faces.html" xmlns:f="jakarta.faces.core" xmlns:p="http://primefaces.org/ui" lang="pt-BR">
+<f:metadata><f:event type="preRenderView" listener="#{usuarioController.descartarSenha}"/></f:metadata>
+<h:head><title>Cadastro de usuários — Parte 2</title><meta name="viewport" content="width=device-width, initial-scale=1"/>
+<style>body{font-family:sans-serif;max-width:1100px;margin:2rem auto;padding:0 1rem} .campo{margin:1rem 0} label{display:block;margin-bottom:.4rem} .cartao{padding:1rem;border:1px solid #ccc;margin:.5rem;overflow-wrap:anywhere} .ui-inputfield{max-width:100%}</style>
 </h:head>
-
 <h:body>
-
-    <h:form>
-
-        <p:messages id="messages" />
-
-        <p:panelGrid columns="2">
-
-            <p:outputLabel for="id" value="ID:" />
-            <p:spinner
-                    id="id"
-                    value="#{UsuarioMB.usuario.id}"
-            />
-
-            <p:outputLabel for="nome" value="Nome:" />
-            <p:inputText
-                    id="nome"
-                    value="#{UsuarioMB.usuario.nome}"
-            />
-
-            <p:outputLabel for="senha" value="Senha:" />
-            <p:inputText
-                    id="senha"
-                    value="#{UsuarioMB.usuario.senha}"
-            />
-
-            <p:outputLabel for="descricao" value="Descrição:" />
-            <p:inputTextarea
-                    id="descricao"
-                    value="#{UsuarioMB.usuario.descricao}"
-            />
-
-            <p:commandButton
-                    value="Cadastrar"
-                    icon="ui-icon-star"
-                    action="#{UsuarioMB.cadastraUsuario}"
-                    update="messages">
-
-            </p:commandButton>
-
-        </p:panelGrid>
-
-    </h:form>
-
-</h:body>
-
-</html>
+<h1>Cadastro de usuários</h1>
+<p:messages id="mensagens" showDetail="false"/>
+<h:form id="cadastro">
+<div class="campo"><p:outputLabel for="nome" value="Nome"/><p:inputText id="nome" value="#{usuarioController.nome}" required="true" requiredMessage="Informe o nome." validatorMessage="O nome deve ter entre 2 e 100 caracteres." maxlength="100"><f:validateLength minimum="2" maximum="100"/></p:inputText></div>
+<div class="campo"><p:outputLabel for="senha" value="Senha (12 a 128 caracteres)"/><p:password id="senha" value="#{usuarioController.senha}" required="true" requiredMessage="Informe a senha." redisplay="false" feedback="true" autocomplete="new-password" maxlength="128" validatorMessage="A senha deve ter entre 12 e 128 caracteres."><f:validateLength minimum="12" maximum="128"/></p:password></div>
+<div class="campo"><p:outputLabel for="descricao" value="Descrição"/><p:inputTextarea id="descricao" value="#{usuarioController.descricao}" required="true" requiredMessage="Informe a descrição." maxlength="500" rows="3" cols="50"/></div>
+<div class="campo"><p:outputLabel for="interesses" value="Interesses (selecione pelo menos um)"/>
+<p:pickList id="interesses" value="#{usuarioController.interesses}" var="interesse" itemLabel="#{interesse}" itemValue="#{interesse}"><f:facet name="sourceCaption">Disponíveis</f:facet><f:facet name="targetCaption">Selecionados</f:facet></p:pickList></div>
+<p:commandButton id="salvar" value="Cadastrar" action="#{usuarioController.cadastrar}" process="@form" update="@form :mensagens :consulta"/>
+</h:form>
+<h2>Usuários cadastrados</h2>
+<h:form id="consulta">
+<p:outputLabel for="busca" value="Buscar por nome"/>
+<p:autoComplete id="busca" value="#{usuarioController.busca}" completeMethod="#{usuarioController.completar}" minQueryLength="2" maxResults="10" maxlength="100" forceSelection="false" emptyMessage="Nenhum usuário encontrado">
+<p:ajax event="itemSelect" listener="#{usuarioController.buscar}" process="@this" update="usuarios :mensagens"/>
+</p:autoComplete>
+<p:commandButton id="buscar" value="Buscar / listar todos" action="#{usuarioController.buscar}" process="@form" update="usuarios :mensagens"/>
+<p:dataView id="usuarios" value="#{usuarioController.usuarios}" var="u" layout="list" paginator="true" rows="12" emptyMessage="Nenhum usuário encontrado.">
+<p:dataViewListItem><div class="cartao"><strong><h:outputText value="#{u.id} — #{u.nome}"/></strong><p><h:outputText value="#{u.descricao}"/></p><p>Interesses: <h:outputText value="#{u.interesses}"/></p><small>Cadastro: <h:outputText value="#{u.dataCadastro}"/></small></div></p:dataViewListItem>
+<p:dataViewGridItem><div class="cartao"><strong><h:outputText value="#{u.id} — #{u.nome}"/></strong><p><h:outputText value="#{u.descricao}"/></p><p>Interesses: <h:outputText value="#{u.interesses}"/></p><small>Cadastro: <h:outputText value="#{u.dataCadastro}"/></small></div></p:dataViewGridItem>
+</p:dataView>
+</h:form>
+</h:body></html>

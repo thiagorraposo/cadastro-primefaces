@@ -1,0 +1,8 @@
+<persistence xmlns="https://jakarta.ee/xml/ns/persistence" version="3.2">
+  <persistence-unit name="cadastro" transaction-type="JTA">
+    <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+    <jta-data-source>java:/jdbc/CadastroDS</jta-data-source>
+    <class>com.devmedia.model.Usuario</class>
+    <properties><property name="hibernate.hbm2ddl.auto" value="validate"/></properties>
+  </persistence-unit>
+</persistence>

@@ -1,0 +1,6 @@
+*
+!Dockerfile
+!docker/
+!docker/configure.cli
+!target/
+!target/cadastro.war

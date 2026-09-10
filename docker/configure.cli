@@ -1,0 +1,5 @@
+embed-server --server-config=standalone.xml --std-out=echo
+module add --name=com.mysql --resources=/tmp/mysql-connector.jar --dependencies=java.sql,java.naming
+/subsystem=datasources/jdbc-driver=mysql:add(driver-name=mysql,driver-module-name=com.mysql,driver-class-name=com.mysql.cj.jdbc.Driver)
+/subsystem=datasources/data-source=CadastroDS:add(jndi-name=java:/jdbc/CadastroDS,driver-name=mysql,connection-url="jdbc:mysql://db:3306/cadastro_parte2?allowPublicKeyRetrieval=true&sslMode=DISABLED&connectionTimeZone=America/Sao_Paulo",user-name=cadastro,password="${env.DB_PASSWORD}",min-pool-size=1,max-pool-size=10,enabled=true)
+stop-embedded-server

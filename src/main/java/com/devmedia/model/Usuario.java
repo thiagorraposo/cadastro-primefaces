@@ -1,52 +1,36 @@
 package com.devmedia.model;
 
-import java.util.Date;
+import jakarta.persistence.*;
+import java.time.LocalDateTime;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
+@Entity
+@Table(name = "usuarios")
 public class Usuario {
-
-    private int id;
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @Column(nullable = false, length = 100)
     private String nome;
-    private String senha;
-    private Date dataCadastro;
+    @Column(name = "senha_hash", nullable = false, length = 255)
+    private String senhaHash;
+    @Column(nullable = false, length = 500)
     private String descricao;
+    @Column(name = "data_cadastro", nullable = false)
+    private LocalDateTime dataCadastro;
+    @ElementCollection
+    @CollectionTable(name = "usuario_interesses", joinColumns = @JoinColumn(name = "usuario_id"))
+    @Column(name = "interesse", nullable = false, length = 40)
+    private Set<String> interesses = new LinkedHashSet<>();
 
-    public int getId() {
-        return id;
+    protected Usuario() { }
+    public Usuario(String nome, String senhaHash, String descricao, Set<String> interesses) {
+        this.nome = nome; this.senhaHash = senhaHash; this.descricao = descricao;
+        this.interesses = new LinkedHashSet<>(interesses); this.dataCadastro = LocalDateTime.now();
     }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public String getSenha() {
-        return senha;
-    }
-
-    public void setSenha(String senha) {
-        this.senha = senha;
-    }
-
-    public Date getDataCadastro() {
-        return dataCadastro;
-    }
-
-    public void setDataCadastro(Date dataCadastro) {
-        this.dataCadastro = dataCadastro;
-    }
-
-    public String getDescricao() {
-        return descricao;
-    }
-
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
+    public Long getId() { return id; }
+    public String getNome() { return nome; }
+    public String getDescricao() { return descricao; }
+    public LocalDateTime getDataCadastro() { return dataCadastro; }
+    public Set<String> getInteresses() { return Set.copyOf(interesses); }
 }
