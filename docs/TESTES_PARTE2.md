@@ -201,10 +201,10 @@ Os três componentes PrimeFaces considerados da Parte 1 são `p:panelGrid`, `p:c
 - **Resultado esperado:** checklist completo, cada etapa com situação e limitações reais.
 - **Critérios objetivos de aprovação:** nenhuma etapa pendente é descrita como aprovada; main/tag/Parte 1 preservadas; commit/push só com autorização.
 - **Testes manuais necessários:** outra pessoa segue o roteiro sem ler o chat; conferir nomes, portas, URLs e comandos.
-- **Evidências que devem ser registradas:** diff final e hash do commit se autorizado, sem `.env`.
+- **Evidências que devem ser registradas:** o primeiro commit de entrega foi `44e215a` (`feat: implementa parte 2 jakarta e primefaces`) e foi enviado para `origin/parte2-customizada`; não houve `.env` no commit. Esta atualização documental registra a entrega sem alterar `main` ou `parte1-original-funcional`.
 - **Possíveis erros e diagnóstico:** documento diverge do código (voltar à etapa 1); teste omitido (marcar pendente); push rejeitado (não forçar).
 - **Checklist final revisado em 10/09/2026:** Jakarta Faces/PrimeFaces, Hibernate/JPA, MVC/CDI, ID automático, MySQL 8.4 isolado, DataSource/JTA, página única/AJAX, `p:password`, `p:autoComplete`, `p:pickList`, `p:dataView`, interesses persistidos, hash seguro e preservação da Parte 1 estão descritos e têm evidências nas etapas anteriores. Permanecem como pendências documentais os testes manuais de reinício previstos nas etapas 7–10 e o teste automatizado de interação do navegador que não foi reproduzido diretamente nesta sessão, embora a repetição tenha sido confirmada pelo usuário na etapa 14. O aviso `WFLYCTL0056` também permanece registrado como ressalva operacional.
-- **Situação atual:** **CONCLUÍDA** quanto à revisão e documentação final. Não houve commit nem push; ambos permanecem opcionais e dependem de autorização explícita.
+- **Situação atual:** **CONCLUÍDA** quanto à revisão, documentação e entrega. Commit e push foram autorizados, executados na branch `parte2-customizada` e não alteraram `main` nem `parte1-original-funcional`.
 
 ## Prompt operacional para a próxima etapa
 
